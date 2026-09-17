@@ -79,7 +79,10 @@ header.top{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92);
 @media(max-width:860px){.product-card{padding:10px 12px 8px; display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:center; text-align:left} .product-card img{max-height:120px; margin:0} .product-card .ribbon{position:static; display:inline-block; margin-bottom:6px} .product-card .disc-ribbon{top:10px; right:10px} .shotcap{font-size:12px}}
 .shotcap{font-size:12.5px; color:var(--muted); font-weight:600}
 .price-box{display:flex; align-items:baseline; gap:12px; margin:12px 0 4px; flex-wrap:wrap}
-.price-new{font-size:40px; font-weight:800; letter-spacing:-.03em; line-height:1}
+.price-new{font-size:40px; font-weight:800; letter-spacing:-.03em; line-height:1; color:var(--danger); display:inline-block; transform-origin:left center;
+  animation:pricePulse 2.4s ease-in-out infinite}   /* 17.09: цена выделена цветом и мягкой пульсацией (решение пользователя) */
+@keyframes pricePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.price-new{animation:none}}
 .price-old{font-size:20px; color:var(--muted); text-decoration:line-through}
 .save-badge{background:var(--danger-bg); color:var(--danger); font-weight:800; font-size:13.5px; padding:5px 10px; border-radius:9px}
 .pricenote{font-size:12.5px; color:var(--muted); margin:0 0 12px}
@@ -137,6 +140,9 @@ header.top{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92);
 /* form card */
 .form-card{background:#fff; border:2px solid var(--accent); border-radius:18px; padding:18px; color:var(--ink); box-shadow:var(--shadow)}
 .form-card h3{margin-bottom:2px; font-size:18px}
+.howq{display:flex; align-items:center; justify-content:space-between; width:100%; background:none; border:none; padding:0 0 8px; margin:0; font:inherit; font-weight:800; font-size:18px; color:var(--ink); cursor:pointer; text-align:left}
+.howq .chev{font-size:16px; color:var(--accent); transition:transform .25s} .howq[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.steps4[hidden]{display:none}
 .form-card .sub{color:var(--muted); font-size:13.5px; margin-bottom:12px}
 .inp{width:100%; padding:14px 15px; border:1.5px solid #cfd8e3; border-radius:12px; font-size:16px; font-family:inherit; outline:none; margin-bottom:10px;
   transition:border-color .15s, box-shadow .15s}
@@ -311,7 +317,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
         <div class="product-card">
           <span class="disc-ribbon disc"></span>
           <img src="../../img/alt3-redraw-cat-drc-32860.webp" alt="Hairstim" width="639" height="640" fetchpriority="high" decoding="async">
-          <div><span class="ribbon">Безплатно</span><div class="shotcap">Това е оригиналната опаковка, която куриерът ще донесе: пломба, номер на партида, срок на годност.</div></div>
+          <div><span class="ribbon">1 опаковка подарък</span><div class="shotcap">Това е оригиналната опаковка, която куриерът ще донесе: пломба, номер на партида, срок на годност.</div></div>
         </div>
       </div>
         <div class="scarcity" id="scarcity">
@@ -326,32 +332,31 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 
       <div id="buy">
         <h1>Hairstim® — единственият официален сайт на производителя в България</h1>
-        <p class="sub-h">Hairstim направо от производителя: без предплащане, плащате на куриера при доставка.</p>
         <div class="price-box">
-          <span class="price-new">1 ОП. БЕЗПЛАТНО</span>
+          <span class="price-new">+1 опаковка ПОДАРЪК</span>
           <span class="price-old"></span>
           <span class="save-badge disc"></span>
         </div>
-        <p class="pricenote">Промоция на производителя: първата опаковка е безплатна, плаща се само доставката.</p>
+        <p class="pricenote">Промоция на производителя: към поръчката получавате една опаковка подарък. Цената ще потвърди консултант при обаждането.</p>
 
         <div class="form-card">
           <form class="order-form" autocomplete="on" novalidate>
-            <h3>Поръчайте оригиналния продукт</h3>
-            <ol class="steps4"><li>Оставяте име и телефон</li><li>Консултант звъни да потвърди адреса и часа на доставка; без картови данни</li><li>Куриерът носи пратката за 1–3 дни</li><li>Преглеждате пратката при получаване и плащате на куриера</li></ol>
+            <button type="button" class="howq" aria-expanded="false">Как да поръчам?<span class="chev">▾</span></button>
+            <ol class="steps4" hidden><li>Оставяте име и телефон</li><li>Консултант звъни да потвърди адреса и часа на доставка; без картови данни</li><li>Куриерът носи пратката за 1–3 дни</li><li>Преглеждате пратката при получаване и плащате на куриера</li></ol>
             <input class="inp" type="text" name="name" placeholder="Име и фамилия" autocomplete="name">
             <div class="phone-field"><span class="p48">🇧🇬 +359</span><input class="inp" type="tel" name="phone" placeholder="87 123 4567" inputmode="numeric" autocomplete="tel"></div>
             <p class="ph-err">Въведете валиден телефонен номер</p>
             <p class="phonewhy">Номерът е нужен за потвърждаващото обаждане. Споделя се само с продавача, службата за потвърждаване на поръчки и куриера.</p>
             <input type="hidden" name="kw" value="bg-dc-hairstim-32860">
-            <button class="btn btn-primary btn-cta" type="submit">ПОЛУЧИ БЕЗПЛАТНО</button>
+            <button class="btn btn-primary btn-cta" type="submit">ПОРЪЧАЙ С ПОДАРЪК</button>
             <p class="today-line">🛒 Днес вече поръчаха <b class="todayN">—</b> души</p>
-            <p class="form-note">Плащате само доставката — при получаване</p>
+            <p class="form-note">Плащане при получаване на пратката; опаковката подарък пристига в същата пратка</p>
           </form>
           <div class="ok-msg"><div class="ok-big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
             <b>Благодарим! Вашата поръчка е получена.</b><p class="ok-when"></p><p class="ok-keep">🔔 Дръжте телефона си под ръка и вдигнете при обаждането.</p></div>
         </div>
         <div class="sig">
-          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h3"/></svg>Продуктът<br>безплатно</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h3"/></svg>Опаковка<br>подарък</div>
           <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Куриер<br>1-3 дни</div>
           <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M9 11l1.5 1.5L13.5 9"/></svg>Проверка<br>преди плащане</div>
           <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Консултантът<br>се обажда</div>
@@ -549,7 +554,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
           <div class="eyebrow" style="color:#7fb0ff">Единственият официален сайт на производителя</div>
           <h2>Поръчайте оригиналния Hairstim®</h2>
           <p class="muted" style="font-size:14.5px">Попълнете формата: консултант ще ви се обади до няколко минути, за да потвърди адреса и деня на доставка. Без предплащане.</p>
-          <div class="price-box"><span class="price-new">1 ОП. БЕЗПЛАТНО</span><span class="price-old"></span><span class="save-badge disc"></span></div>
+          <div class="price-box"><span class="price-new">+1 опаковка ПОДАРЪК</span><span class="price-old"></span><span class="save-badge disc"></span></div>
           <ul class="perks">
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Плащане само при доставка</li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Проверка преди плащане</li>
@@ -559,16 +564,16 @@ body.free .disc,body:not(.free) .nodisc{display:none}
         </div>
         <div class="form-card">
           <form class="order-form" autocomplete="on" novalidate>
-            <h3>Поръчайте оригиналния продукт</h3>
-            <ol class="steps4"><li>Оставяте име и телефон</li><li>Консултант звъни да потвърди адреса и часа на доставка; без картови данни</li><li>Куриерът носи пратката за 1–3 дни</li><li>Преглеждате пратката при получаване и плащате на куриера</li></ol>
+            <button type="button" class="howq" aria-expanded="false">Как да поръчам?<span class="chev">▾</span></button>
+            <ol class="steps4" hidden><li>Оставяте име и телефон</li><li>Консултант звъни да потвърди адреса и часа на доставка; без картови данни</li><li>Куриерът носи пратката за 1–3 дни</li><li>Преглеждате пратката при получаване и плащате на куриера</li></ol>
             <input class="inp" type="text" name="name" placeholder="Име и фамилия" autocomplete="name">
             <div class="phone-field"><span class="p48">🇧🇬 +359</span><input class="inp" type="tel" name="phone" placeholder="87 123 4567" inputmode="numeric" autocomplete="tel"></div>
             <p class="ph-err">Въведете валиден телефонен номер</p>
             <p class="phonewhy">Номерът е нужен за потвърждаващото обаждане. Споделя се само с продавача, службата за потвърждаване на поръчки и куриера.</p>
             <input type="hidden" name="kw" value="bg-dc-hairstim-32860">
-            <button class="btn btn-primary btn-cta" type="submit">ПОЛУЧИ БЕЗПЛАТНО</button>
+            <button class="btn btn-primary btn-cta" type="submit">ПОРЪЧАЙ С ПОДАРЪК</button>
             <p class="today-line">🛒 Днес вече поръчаха <b class="todayN">—</b> души</p>
-            <p class="form-note">Плащате само доставката — при получаване</p>
+            <p class="form-note">Плащане при получаване на пратката; опаковката подарък пристига в същата пратка</p>
           </form>
           <div class="ok-msg"><div class="ok-big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
             <b>Благодарим! Вашата поръчка е получена.</b><p class="ok-when"></p><p class="ok-keep">🔔 Дръжте телефона си под ръка и вдигнете при обаждането.</p></div>
@@ -589,7 +594,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 
 <script>
 (function(){
-  var WORKER='https://pilot-leads.bnsshub.workers.dev', KW='bg-dc-hairstim-32860', KEYWORD='hairstim', BTN='ПОЛУЧИ БЕЗПЛАТНО';
+  var WORKER='https://pilot-leads.bnsshub.workers.dev', KW='bg-dc-hairstim-32860', KEYWORD='hairstim', BTN='ПОРЪЧАЙ С ПОДАРЪК';
   if(''==='') document.body.classList.add('free');
   var qs=new URLSearchParams(location.search);
   // click-id из трекера: основной параметр cid; запасные — субы сетей и gclid Google
@@ -632,6 +637,8 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 
 
   // --- FAQ ---
+  // «Как заказать?» — шаги заказа раскрываются по клику (17.09)
+  Array.prototype.forEach.call(document.querySelectorAll('.howq'),function(b){ b.addEventListener('click',function(){ var ol=b.nextElementSibling, o=b.getAttribute('aria-expanded')==='true'; b.setAttribute('aria-expanded',o?'false':'true'); if(ol) ol.hidden=o; }); });
   document.querySelectorAll('.q button').forEach(function(btn){
     btn.addEventListener('click',function(){ var q=btn.parentElement, a=q.querySelector('.ans');
       if(q.classList.contains('open')){ q.classList.remove('open'); a.style.maxHeight=null; }
