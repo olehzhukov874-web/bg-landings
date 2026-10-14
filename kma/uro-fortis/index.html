@@ -423,7 +423,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   <div class="certs">
     <button class="cert" type="button" data-i="0"><img src="../../img/cert1.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇧🇬</span><span class="t">Директна продажба</span><span class="rule"></span><span class="p">Поръчките се обработват от отдела за обслужване на клиенти на производителя. Всяка поръчка се потвърждава по телефона преди изпращане.</span><span class="prod">Uro Fortis®</span></span></button>
     <button class="cert" type="button" data-i="1"><img src="../../img/cert2.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇧🇬</span><span class="t">Оригинална опаковка</span><span class="rule"></span><span class="p">Всяка пратка се изпраща с пломба на производителя и номер на партида. Без посредници и без препродавачи.</span><span class="prod">Uro Fortis®</span></span></button>
-    <button class="cert" type="button" data-i="2"><img src="../../img/cert3.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇧🇬</span><span class="t">Гаранция от продавача</span><span class="rule"></span><span class="p">Оглеждате пратката при получаване и плащате едва след проверката. Може да се откажете от нея без разходи.</span><span class="prod">Uro Fortis®</span></span></button>
+    <button class="cert" type="button" data-i="2"><img src="../../img/cert3.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇧🇬</span><span class="t">Гаранция от продавача</span><span class="rule"></span><span class="p">Оглеждате пратката при получаване и плащате едва след проверката. Можете да се откажете от нея без разходи.</span><span class="prod">Uro Fortis®</span></span></button>
   </div>
 </div>
 <div class="cert-lb" id="certLb" hidden><button class="cert-x" type="button" aria-label="×">×</button><div class="cert-big"></div></div>
@@ -754,7 +754,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   try{ var st=+localStorage.getItem('lp_stock'); if(st>6&&st<stock) stock=st; }catch(e){}   // остаток не растёт при перезагрузке
   function rs(){ sn.textContent=stock; sn2.textContent=stock; sb.style.width=Math.max(6,(stock/stockMax)*100)+'%'; try{ localStorage.setItem('lp_stock',stock); }catch(e){} }
   rs();
-  var L={"cc": "+359", "phMin": 8, "phMax": 9, "ph0": true, "fem": "[ая]$", "t1m": "току-що направи поръчка", "t1f": "току-що направи поръчка", "t2m": "току-що поръча 2 опаковки", "t2f": "току-що поръча 2 опаковки", "agoMin": " мин.", "agoH": " ч.", "agoY": "вчера", "agoD": " дни", "names": ["Мария", "Георги", "Елена", "Иван", "Даниела", "Димитър", "Йорданка", "Николай", "Силвия", "Стоян", "Десислава", "Мартин", "Габриела", "Петър", "Теодора", "Красимир", "Ралица", "Кристиян", "Виктория", "Александър"], "cities": ["София", "Пловдив", "Варна", "Бургас", "Русе", "Стара Загора", "Плевен", "Сливен", "Добрич", "Шумен", "Перник", "Хасково", "Ямбол", "Пазарджик", "Благоевград", "Велико Търново", "Враца", "Габрово", "Асеновград", "Видин"]};   // локаль тостов/дат/телефона (генерится сборкой из i18n)
+  var L={"cc": "+359", "phMin": 8, "phMax": 9, "ph0": true, "fem": "[ая]$", "t1m": "току-що направи поръчка", "t1f": "току-що направи поръчка", "t2m": "току-що поръча 2 опаковки", "t2f": "току-що поръча 2 опаковки", "agoMin": "преди {n} мин.", "agoH": "преди {n} ч.", "agoY": "вчера", "agoD": "преди {n} дни", "names": ["Мария", "Георги", "Елена", "Иван", "Даниела", "Димитър", "Йорданка", "Николай", "Силвия", "Стоян", "Десислава", "Мартин", "Габриела", "Петър", "Теодора", "Красимир", "Ралица", "Кристиян", "Виктория", "Александър"], "cities": ["София", "Пловдив", "Варна", "Бургас", "Русе", "Стара Загора", "Плевен", "Сливен", "Добрич", "Шумен", "Перник", "Хасково", "Ямбол", "Пазарджик", "Благоевград", "Велико Търново", "Враца", "Габрово", "Асеновград", "Видин"]};   // локаль тостов/дат/телефона (генерится сборкой из i18n)
   var NAMES=L.names, CITIES=L.cities;
   function drop(){
     if(stock>6){
@@ -801,8 +801,9 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   var AGO=[14,42,96,180,260,420];   // первые шесть — свежие, дальше растёт плавно (отзывов теперь 72)
   Array.prototype.forEach.call(document.querySelectorAll('.ago'),function(el){
     var i=+el.getAttribute('data-i'), m=(i<AGO.length?AGO[i]:Math.round(600+i*i*3.2+i*180)), t;
-    if(m<60) t=m+L.agoMin; else if(m<1440) t=Math.round(m/60)+L.agoH;
-    else if(m<2880) t=L.agoY; else t=Math.round(m/1440)+L.agoD;
+    var agoF=function(n,s){return s.indexOf('{n}')>=0?s.replace('{n}',n):n+s;};   // «vor {n} Min.» / «{n} min temu»
+    if(m<60) t=agoF(m,L.agoMin); else if(m<1440) t=agoF(Math.round(m/60),L.agoH);
+    else if(m<2880) t=L.agoY; else t=agoF(Math.round(m/1440),L.agoD);
     el.textContent=t;
   });
 
